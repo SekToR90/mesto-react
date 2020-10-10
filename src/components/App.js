@@ -3,79 +3,93 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import ImagePopup from './ImagePopup'
+import PopupWithForm from "./PopupWithForm";
 import '../index.css';
 
+
 function App() {
+  // Переменные, отвечающие за видимость модалок
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({});
 
-  function  handleEditAvatarClick () {
-    const userAvatar = document.querySelector('.modal_edit-avatar');
-    userAvatar.classList.add('modal_open');
+
+  //
+
+  //Обработчики событий, открывающие модалки
+  const handleEditAvatarClick = () => {
+    setIsEditAvatarPopupOpen(true);
   }
 
-  function handleEditProfileClick() {
-    const editProfile = document.querySelector('.modal_edit-profile');
-    editProfile.classList.add('modal_open');
+  const handleEditProfileClick = () => {
+    setIsEditProfilePopupOpen(true);
   }
 
-  function handleAddPlaceClick () {
-    const addCard = document.querySelector('.modal_add-card');
-    addCard.classList.add('modal_open');
+  const handleAddPlaceClick = () => {
+    setIsAddPlacePopupOpen(true);
   }
+
+  const handleCardClick = (cardData) => {
+    setSelectedCard(cardData);
+    setIsImagePopupOpen(true);
+  }
+  //
+
+  //Обработчик событий, закрывающий все модалки
+  const closeAllPopups = () => {
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsImagePopupOpen(false);
+  }
+  //
 
   return (
     <div className="page">
       <div className="page__container">
         <Header />
-        <Main />
+        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
         <Footer />
-
-        <div className="modal modal_edit-profile">
-          <div className="modal__container">
-            <button type="button" className="modal__close-button">
-              <img className="modal__close" src="../images/close-icon.svg" alt="Кнопка_выхода"/>
-            </button>
-            <h2 className="modal__title">Редактировать профиль</h2>
-            <form action="#" name="form" className="modal__field" noValidate>
-
-              <input type="text" name="name" className="modal__input modal__input_name" value="Жак-Ив Кусто"
-                     placeholder="Имя" required minLength="2" maxLength="40" autoComplete="off"/>
-                <span className="modal__error" id="name-error"></span>
-
-                <input type="text" name="aboutMe" className="modal__input modal__input_about-me"
-                       value="Исследователь океана" placeholder="О себе" required minLength="2" maxLength="200"
-                       autoComplete="off"/>
-                  <span className="modal__error" id="aboutMe-error"></span>
-
-                  <button type="submit" className="modal__button-save modal__button-save_disabled" disabled>Сохранить
-                  </button>
-            </form>
-          </div>
-        </div>
       </div>
+        <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose ={closeAllPopups}/>
+        <PopupWithForm name="edit-profile" title="Редактировать профиль" buttonText="Сохранить" isOpen={isEditProfilePopupOpen ? 'modal_open' : ''} onClose ={closeAllPopups} children={
+          <>
+          <input type="text" name="name" className="modal__input modal__input_name" value=""
+                 placeholder="Имя" required minLength="2" maxLength="40" autoComplete="off"/>
+          <span className="modal__error" id="name-error"></span>
 
-      <div className="modal modal_add-card">
-        <div className="modal__container">
-          <button type="button" className="modal__close-button">
-            <img className="modal__close" src="../images/close-icon.svg" alt="Кнопка_выхода"/>
-          </button>
-          <h2 className="modal__title">Новое место</h2>
-          <form action="#" name="form" className="modal__field" noValidate>
+          <input type="text" name="aboutMe" className="modal__input modal__input_about-me"
+          value="" placeholder="О себе" required minLength="2" maxLength="200"
+          autoComplete="off"/>
+          <span className="modal__error" id="aboutMe-error"></span>
+          </>
+          }
+        />
 
-            <input type="text" name="plase" className="modal__input modal__input_plase" placeholder="Название" required
-                   minLength="1" maxLength="30" autoComplete="off"/>
-              <span className="modal__error" id="plase-error"></span>
+      <PopupWithForm name="add-card" title="Новое место" buttonText="Создать" isOpen={isAddPlacePopupOpen ? 'modal_open' : ''} onClose ={closeAllPopups} children={
+        <>
+          <input type="text" name="plase" className="modal__input modal__input_plase" placeholder="Название" required
+                 minLength="1" maxLength="30" autoComplete="off"/>
+          <span className="modal__error" id="plase-error"></span>
 
-              <input type="url" name="url" className="modal__input modal__input_link" placeholder="Ссылка на картинку"
-                     required autoComplete="off"/>
-                <span className="modal__error" id="url-error"></span>
+          <input type="url" name="url" className="modal__input modal__input_link" placeholder="Ссылка на картинку"
+                 required autoComplete="off"/>
+          <span className="modal__error" id="url-error"></span>
+        </>
+      }
+      />
 
-                <button type="submit" className="modal__button-save modal__button-save_disabled" disabled>Создать
-                </button>
-          </form>
-        </div>
-      </div>
+      <PopupWithForm name="edit-avatar" title="Обновить аватар" buttonText="Сохранить" isOpen={isEditAvatarPopupOpen ? 'modal_open' : ''} onClose ={closeAllPopups} children={
+        <>
+          <input type="url" name="urlAvatar" className="modal__input modal__input_link-avatar"
+                 placeholder="Ссылка на картинку" required autoComplete="off"/>
+          <span className="modal__error" id="urlAvatar-error"></span>
+        </>
+      }
+      />
 
-      <ImagePopup />
 
       <div className="modal modal_delete-card">
         <div className="modal__container">
@@ -89,37 +103,11 @@ function App() {
         </div>
       </div>
 
-      <div className="modal modal_edit-avatar">
-        <div className="modal__container">
-          <button type="button" className="modal__close-button">
-            <img className="modal__close" src="../images/close-icon.svg" alt="Кнопка_выхода"/>
-          </button>
-          <h2 className="modal__title">Обновить аватар</h2>
-          <form action="#" name="form" className="modal__field" noValidate>
 
-            <input type="url" name="urlAvatar" className="modal__input modal__input_link-avatar"
-                   placeholder="Ссылка на картинку" required autoComplete="off"/>
-              <span className="modal__error" id="urlAvatar-error"></span>
 
-              <button type="submit" className="modal__button-save modal__button-save_disabled" disabled>Сохранить
-              </button>
-          </form>
-        </div>
-      </div>
+      {/*<template className="elements-card">*/}
 
-      <template className="elements-card">
-        <div className="element">
-          <button type="button" className="element__delete"></button>
-          <img className="element__img" alt=""/>
-            <div className="element__group">
-              <h2 className="element__title"></h2>
-              <div>
-                <button type="button" className="element__like"></button>
-                <h3 className="element__like_title"></h3>
-              </div>
-            </div>
-        </div>
-      </template>
+      {/*</template>*/}
     </div>
   );
 }
