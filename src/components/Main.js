@@ -1,25 +1,33 @@
 import React from "react";
-import api from "./Api";
+import api from "../utils/Api";
 import Card from "./Card";
 import profilePencil from '../images/profile-pencil.svg'
 import buttonAdd from '../images/button-add.svg'
 
 function Main(props) {
-    const [userProfile, setUserProfile] = React.useState([]);
+    const [userProfile, setUserProfile] = React.useState('');
     const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
-        api.getUserMe().then((data) => {
-            setUserProfile({
-                userName: data.name,
-                userDescription: data.about,
-                userAvatar: data.avatar,
+        api.getUserMe()
+            .then((data) => {
+                setUserProfile({
+                    userName: data.name,
+                    userDescription: data.about,
+                    userAvatar: data.avatar,
+                });
+            })
+            .catch((err) => {
+                console.log(err);
             });
-        });
 
-        api.getAllCards().then((data) => {
-            setCards(data);
-        });
+        api.getAllCards()
+            .then((data) => {
+                setCards(data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     },[]);
 
     return (

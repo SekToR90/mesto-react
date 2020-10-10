@@ -4,7 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import ImagePopup from './ImagePopup'
 import PopupWithForm from "./PopupWithForm";
-import '../index.css';
+
 
 
 function App() {
@@ -56,13 +56,10 @@ function App() {
         <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose ={closeAllPopups}/>
         <PopupWithForm name="edit-profile" title="Редактировать профиль" buttonText="Сохранить" isOpen={isEditProfilePopupOpen ? 'modal_open' : ''} onClose ={closeAllPopups} children={
           <>
-          <input type="text" name="name" className="modal__input modal__input_name" value=""
-                 placeholder="Имя" required minLength="2" maxLength="40" autoComplete="off"/>
+          <input type="text" name="name" className="modal__input modal__input_name" placeholder="Имя" required minLength="2" maxLength="40" autoComplete="off"/>
           <span className="modal__error" id="name-error"></span>
 
-          <input type="text" name="aboutMe" className="modal__input modal__input_about-me"
-          value="" placeholder="О себе" required minLength="2" maxLength="200"
-          autoComplete="off"/>
+          <input type="text" name="aboutMe" className="modal__input modal__input_about-me" placeholder="О себе" required minLength="2" maxLength="200" autoComplete="off"/>
           <span className="modal__error" id="aboutMe-error"></span>
           </>
           }
@@ -90,24 +87,8 @@ function App() {
       }
       />
 
+      <PopupWithForm name="delete-card" title="Вы уверены?" buttonText="Да" />
 
-      <div className="modal modal_delete-card">
-        <div className="modal__container">
-          <button type="button" className="modal__close-button">
-            <img className="modal__close" src="../images/close-icon.svg" alt="Кнопка_выхода"/>
-          </button>
-          <h2 className="modal__title">Вы уверены?</h2>
-          <form action="#" name="form" className="modal__field" noValidate>
-            <button type="submit" className="modal__button-save">Да</button>
-          </form>
-        </div>
-      </div>
-
-
-
-      {/*<template className="elements-card">*/}
-
-      {/*</template>*/}
     </div>
   );
 }

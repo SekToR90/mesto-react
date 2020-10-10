@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [GitHub](https://sektor90.github.io/mesto-react/index.html ).
 
 ## Available Scripts
 
