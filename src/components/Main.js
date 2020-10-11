@@ -5,7 +5,7 @@ import profilePencil from '../images/profile-pencil.svg'
 import buttonAdd from '../images/button-add.svg'
 
 function Main(props) {
-    const [userProfile, setUserProfile] = React.useState('');
+    const [userProfile, setUserProfile] = React.useState({});
     const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
