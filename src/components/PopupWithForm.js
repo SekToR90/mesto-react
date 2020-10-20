@@ -9,9 +9,9 @@ function PopupWithForm (props) {
                     <img className="modal__close" src={closeIcon} alt="Кнопка_выхода"/>
                 </button>
                 <h2 className="modal__title">{props.title}</h2>
-                <form action="#" name={props.name} className="modal__field" noValidate>
+                <form action="#" name={props.name} className="modal__field" onSubmit={props.onSubmit} noValidate>
                     {props.children}
-                    <button type="submit" className="modal__button-save modal__button-save_disabled" disabled>{props.buttonText}
+                    <button type="submit" className={`modal__button-save ${props.submitIsValid ? 'modal__button-save_disabled' : '' }`} disabled={props.submitIsValid}>{props.buttonText}
                     </button>
                 </form>
             </div>

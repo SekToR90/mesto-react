@@ -39,7 +39,7 @@
             headers: this.headers,
             body: JSON.stringify({
                 name: value.name,
-                about: value.aboutMe
+                about: value.about
             })
         })
             .then((res) => {
@@ -74,7 +74,7 @@
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
-                avatar: value.urlAvatar
+                avatar: value.avatar
             })
         })
             .then((res) => {
@@ -126,6 +126,13 @@
                 return Promise.reject(`Ошибка: ${res.status}`);
             });
     }
+
+     changeLikeCardStatus(id, isLiked) {
+         return isLiked
+             ? this.putLikeCards(id)
+             : this.deleteLikeCards(id)
+     }
+
 }
 
 
