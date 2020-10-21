@@ -56,8 +56,8 @@
             method: 'POST',
             headers: this.headers,
             body: JSON.stringify({
-                name: value.plase,
-                link: value.url
+                name: value.name,
+                link: value.link
             })
         })
             .then((res) => {
