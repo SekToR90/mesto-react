@@ -10,11 +10,11 @@ function EditProfilePopup (props) {
     const currentUser = React.useContext(CurrentUserContext);
 
     const [name , setName ] = React.useState('');
-    const [nameIsValid , setNameIsValid ] = React.useState(false);
+    const [nameIsValid , setNameIsValid ] = React.useState(true);
     const [nameErrorMessage , setNameErrorMessage ] = React.useState('');
 
     const [description , setDescription ] = React.useState('');
-    const [descriptionIsValid , setDescriptionIsValid ] = React.useState(false);
+    const [descriptionIsValid , setDescriptionIsValid ] = React.useState(true);
     const [descriptionErrorMessage , setDescriptionErrorMessage ] = React.useState('');
 
     function handleNameChange(e) {
@@ -40,12 +40,21 @@ function EditProfilePopup (props) {
         });
     }
 
+    function resetAllInput () {
+        setNameIsValid(true)
+        setNameErrorMessage('');
+
+        setDescriptionIsValid(true)
+        setDescriptionErrorMessage('');
+    }
+
     // После загрузки текущего пользователя из API
     // его данные будут использованы в управляемых компонентах.
     React.useEffect(() => {
         setName(currentUser.name);
         setDescription(currentUser.about);
-    }, [currentUser]);
+        resetAllInput();
+    }, [currentUser, props.isOpen]);
 
     return (
         <PopupWithForm name="edit-profile" title="Редактировать профиль" buttonText="Сохранить" isOpen={props.isOpen ? 'modal_open' : ''} onClose ={props.onClose} onSubmit={handleSubmit}  submitIsValid={!nameIsValid || !descriptionIsValid} children={
